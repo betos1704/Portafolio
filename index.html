@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restaurante Aurora — Menú</title>
+  <meta name="description" content="Página de prueba con menú de restaurante." />
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111826;
+      --muted:#94a3b8;
+      --text:#e2e8f0;
+      --accent:#f59e0b;
+      --accent2:#22c55e;
+      --border:rgba(148,163,184,.18);
+      --shadow: 0 10px 35px rgba(0,0,0,.35);
+      --radius:16px;
+      --max:1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 700px at 20% -10%, rgba(245,158,11,.18), transparent 55%),
+                  radial-gradient(900px 600px at 90% 0%, rgba(34,197,94,.12), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:24px}
+    header{
+      position:sticky; top:0;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,20,.65);
+      border-bottom:1px solid var(--border);
+      z-index:10;
+    }
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .brand{display:flex; align-items:center; gap:12px; padding:14px 0}
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 8px 22px rgba(245,158,11,.18);
+    }
+    .brand h1{font-size:16px; margin:0}
+    .brand p{margin:2px 0 0; font-size:12px; color:var(--muted)}
+    nav{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .pill{
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background: rgba(17,24,38,.6);
+      font-size:13px;
+      transition:.2s;
+    }
+    .pill:hover{transform: translateY(-1px); border-color: rgba(245,158,11,.45)}
+    .hero{
+      padding:26px 0 10px;
+      display:grid; gap:14px;
+    }
+    .hero h2{font-size:34px; margin:0; letter-spacing:-.6px}
+    .hero p{margin:0; color:var(--muted); max-width:65ch}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:6px}
+    .btn{
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(17,24,38,.75);
+      color:var(--text);
+      font-weight:600;
+      cursor:pointer;
+      transition:.2s;
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));
+      border-color: rgba(245,158,11,.55);
+      color:#0b0f14;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:16px;
+      margin: 18px 0 30px;
+    }
+    @media (min-width: 900px){
+      .grid{grid-template-columns: 2fr 1fr}
+    }
+    .card{
+      background: rgba(17,24,38,.75);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:16px 18px;
+      border-bottom:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .card .hd h3{margin:0; font-size:16px}
+    .tag{
+      font-size:12px; color:rgba(11,15,20,.95);
+      background: rgba(245,158,11,.9);
+      border-radius:999px;
+      padding:6px 10px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .content{padding:16px 18px}
+    .search{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin: 10px 0 0;
+    }
+    input[type="search"]{
+      flex:1 1 220px;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(11,15,20,.55);
+      color:var(--text);
+      outline:none;
+    }
+    select{
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(11,15,20,.55);
+      color:var(--text);
+      outline:none;
+    }
+    .section{margin-top:14px}
+    .section h4{
+      margin:16px 0 10px;
+      font-size:13px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:rgba(245,158,11,.9);
+    }
+    .item{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:10px;
+      padding:12px 0;
+      border-top:1px dashed rgba(148,163,184,.22);
+    }
+    .item:first-of-type{border-top:none}
+    .name{font-weight:700}
+    .desc{margin-top:4px; color:var(--muted); font-size:13px}
+    .price{font-weight:800}
+    .badges{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+    .badge{
+      font-size:12px;
+      padding:5px 8px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      color:var(--muted);
+      background: rgba(11,15,20,.35);
+    }
+    .badge.hot{border-color: rgba(245,158,11,.5); color: rgba(245,158,11,.95)}
+    .badge.vegan{border-color: rgba(34,197,94,.5); color: rgba(34,197,94,.95)}
+    .aside p{margin:0; color:var(--muted); font-size:13px}
+    .info{
+      display:grid; gap:10px;
+      padding:10px 0 0;
+    }
+    .info div{
+      border-top:1px dashed rgba(148,163,184,.22);
+      padding-top:10px;
+    }
+    footer{
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      padding:18px 0 26px;
+      font-size:12px;
+    }
+    .notice{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      background: rgba(245,158,11,.08);
+      border:1px solid rgba(245,158,11,.25);
+      color: rgba(226,232,240,.95);
+      font-size:13px;
+    }
+    .sr-only{position:absolute; left:-9999px}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap topbar">
+    <a class="brand" href="#inicio" aria-label="Ir al inicio">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1>Restaurante Aurora</h1>
+        <p>Menú de prueba · Cocina fresca</p>
+      </div>
+    </a>
+
+    <nav aria-label="Secciones del menú">
+      <a class="pill" href="#entradas">Entradas</a>
+      <a class="pill" href="#platos">Platos fuertes</a>
+      <a class="pill" href="#postres">Postres</a>
+      <a class="pill" href="#bebidas">Bebidas</a>
+      <a class="pill" href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="inicio">
+  <section class="hero">
+    <h2>Menú</h2>
+    <p>
+      Página web de prueba con un menú simple. Incluye buscador, filtro por categoría y un resumen lateral.
+      Puedes copiar este archivo como <b>index.html</b> y abrirlo en tu navegador.
+    </p>
+
+    <div class="actions">
+      <button class="btn primary" id="btnVerTodo" type="button">Ver todo</button>
+      <button class="btn" id="btnRecomendados" type="button">Solo recomendados</button>
+    </div>
+
+    <div class="search">
+      <label class="sr-only" for="q">Buscar</label>
+      <input id="q" type="search" placeholder="Buscar en el menú (ej: pollo, ensalada, chocolate)..." />
+
+      <label class="sr-only" for="cat">Categoría</label>
+      <select id="cat">
+        <option value="all">Todas las categorías</option>
+        <option value="entradas">Entradas</option>
+        <option value="platos">Platos fuertes</option>
+        <option value="postres">Postres</option>
+        <option value="bebidas">Bebidas</option>
+      </select>
+    </div>
+
+    <div class="notice" id="status" role="status" aria-live="polite">
+      Mostrando todo el menú.
+    </div>
+  </section>
+
+  <section class="grid">
+    <section class="card">
+      <div class="hd">
+        <h3>Lista del menú</h3>
+        <span class="tag">Hoy</span>
+      </div>
+      <div class="content" id="menu">
+        <!-- Entradas -->
+        <div class="section" data-section="entradas" id="entradas">
+          <h4>Entradas</h4>
+
+          <article class="item" data-cat="entradas" data-tags="recomendado vegetariano">
+            <div>
+              <div class="name">Bruschetta clásica</div>
+              <div class="desc">Pan rústico, tomate, albahaca y aceite de oliva.</div>
+              <div class="badges">
+                <span class="badge">Vegetariano</span>
+                <span class="badge hot">Recomendado</span>
+              </div>
+            </div>
+            <div class="price">$5.50</div>
+          </article>
+
+          <article class="item" data-cat="entradas" data-tags="recomendado">
+            <div>
+              <div class="name">Sopa del día</div>
+              <div class="desc">Preparación casera (pregunta por la opción).</div>
+              <div class="badges">
+                <span class="badge hot">Recomendado</span>
+              </div>
+            </div>
+            <div class="price">$4.80</div>
+          </article>
+
+          <article class="item" data-cat="entradas" data-tags="vegan">
+            <div>
+              <div class="name">Ensalada verde</div>
+              <div class="desc">Mix de hojas, pepino, palta y vinagreta cítrica.</div>
+              <div class="badges">
+                <span class="badge vegan">Vegana</span>
+              </div>
+            </div>
+            <div class="price">$6.20</div>
+          </article>
+        </div>
+
+        <!-- Platos fuertes -->
+        <div class="section" data-section="platos" id="platos">
+          <h4>Platos fuertes</h4>
+
+          <article class="item" data-cat="platos" data-tags="recomendado">
+            <div>
+              <div class="name">Pollo a la plancha</div>
+              <div class="desc">Con papas rústicas y ensalada fresca.</div>
+              <div class="badges">
+                <span class="badge hot">Recomendado</span>
+              </div>
+            </div>
+            <div class="price">$12.90</div>
+          </article>
+
+          <article class="item" data-cat="platos" data-tags="">
+            <div>
+              <div class="name">Pasta Alfredo</div>
+              <div class="desc">Salsa cremosa, parmesano y pimienta negra.</div>
+              <div class="badges">
+                <span class="badge">Clásico</span>
+              </div>
+            </div>
+            <div class="price">$11.50</div>
+          </article>
+
+          <article class="item" data-cat="platos" data-tags="vegan recomendado">
+            <div>
+              <div class="name">Bowl vegano</div>
+              <div class="desc">Quinoa, vegetales asados, garbanzos y tahini.</div>
+              <div class="badges">
+                <span class="badge vegan">Vegano</span>
+                <span class="badge hot">Recomendado</span>
+              </div>
+            </div>
+            <div class="price">$10.80</div>
+          </article>
+        </div>
+
+        <!-- Postres -->
+        <div class="section" data-section="postres" id="postres">
+          <h4>Postres</h4>
+
+          <article class="item" data-cat="postres" data-tags="recomendado">
+            <div>
+              <div class="name">Cheesecake de frutos rojos</div>
+              <div class="desc">Cremoso, con coulis de frutos rojos.</div>
+              <div class="badges">
+                <span class="badge hot">Recomendado</span>
+              </div>
+            </div>
+            <div class="price">$6.90</div>
+          </article>
+
+          <article class="item" data-cat="postres" data-tags="chocolate">
+            <div>
+              <div class="name">Brownie tibio</div>
+              <div class="desc">Chocolate intenso con helado de vainilla.</div>
+              <div class="badges">
+                <span class="badge">Chocolate</span>
+              </div>
+            </div>
+            <div class="price">$6.40</div>
+          </article>
+        </div>
+
+        <!-- Bebidas -->
+        <div class="section" data-section="bebidas" id="bebidas">
+          <h4>Bebidas</h4>
+
+          <article class="item" data-cat="bebidas" data-tags="sin alcohol">
+            <div>
+              <div class="name">Limonada natural</div>
+              <div class="desc">Clásica, con hierbabuena (opcional).</div>
+              <div class="badges">
+                <span class="badge">Sin alcohol</span>
+              </div>
+            </div>
+            <div class="price">$3.20</div>
+          </article>
+
+          <article class="item" data-cat="bebidas" data-tags="cafe">
+            <div>
+              <div class="name">Café americano</div>
+              <div class="desc">Tostado medio, aroma suave.</div>
+              <div class="badges">
+                <span class="badge">Café</span>
+              </div>
+            </div>
+            <div class="price">$2.60</div>
+          </article>
+
+          <article class="item" data-cat="bebidas" data-tags="recomendado">
+            <div>
+              <div class="name">Té chai</div>
+              <div class="desc">Especias, leche y canela.</div>
+              <div class="badges">
+                <span class="badge hot">Recomendado</span>
+              </div>
+            </div>
+            <div class="price">$3.80</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <aside class="card aside" id="contacto">
+      <div class="hd">
+        <h3>Información</h3>
+        <span class="tag">Demo</span>
+      </div>
+      <div class="content">
+        <p><b>Horario:</b> Lun–Sáb · 12:00–22:00</p>
+        <div class="info">
+          <div>
+            <p><b>Dirección:</b> Av. Principal 123</p>
+            <p><b>Tel:</b> +00 000 000 000</p>
+          </div>
+          <div>
+            <p><b>Promoción:</b> 10% en bowls veganos (solo hoy)</p>
+          </div>
+          <div>
+            <p><b>Nota:</b> Este es un sitio de prueba. Edita nombres, precios y contacto.</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Restaurante Aurora · Página de prueba
+  </footer>
+</main>
+
+<script>
+  const q = document.getElementById("q");
+  const cat = document.getElementById("cat");
+  const status = document.getElementById("status");
+  const btnVerTodo = document.getElementById("btnVerTodo");
+  const btnRecomendados = document.getElementById("btnRecomendados");
+  const items = Array.from(document.querySelectorAll(".item"));
+
+  let onlyRecommended = false;
+
+  function normalize(s){
+    return (s || "").toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+  }
+
+  function applyFilters(){
+    const query = normalize(q.value);
+    const category = cat.value;
+
+    let visibleCount = 0;
+
+    items.forEach(el => {
+      const name = normalize(el.querySelector(".name")?.textContent);
+      const desc = normalize(el.querySelector(".desc")?.textContent);
+      const tags = normalize(el.getAttribute("data-tags"));
+      const itemCat = el.getAttribute("data-cat");
+
+      const matchesQuery = !query || (name + " " + desc + " " + tags).includes(query);
+      const matchesCat = (category === "all") || (itemCat === category);
+      const matchesRec = !onlyRecommended || tags.includes("recomendado");
+
+      const show = matchesQuery && matchesCat && matchesRec;
+      el.style.display = show ? "" : "none";
+      if (show) visibleCount++;
+    });
+
+    const msgCat = (category === "all") ? "todas las categorías" : category;
+    const msgRec = onlyRecommended ? " (solo recomendados)" : "";
+    status.textContent = `Mostrando ${visibleCount} item(s) · ${msgCat}${msgRec}.`;
+  }
+
+  q.addEventListener("input", applyFilters);
+  cat.addEventListener("change", applyFilters);
+
+  btnVerTodo.addEventListener("click", () => {
+    onlyRecommended = false;
+    applyFilters();
+  });
+
+  btnRecomendados.addEventListener("click", () => {
+    onlyRecommended = true;
+    applyFilters();
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  applyFilters();
+</script>
+
+</body>
+</html>
+<!-- Esto es un comentario -->
+<!-- Esto es un comentario -->
